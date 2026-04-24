@@ -4,8 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Theme-owned replacement for the small subset of ACF field formatting this
- * theme uses on the frontend.
+ * Theme-owned field formatting used by frontend templates and widgets.
  */
 function vmb_get_field( $key, $post_id = false, $default = '' ) {
     if ( 'option' === $post_id || 'options' === $post_id ) {
@@ -220,39 +219,4 @@ function vmb_sanitize_gallery_ids( $value ) {
     }
 
     return array_values( array_filter( array_map( 'absint', $ids ) ) );
-}
-
-if ( ! function_exists( 'get_field' ) ) {
-    function get_field( $selector, $post_id = false ) {
-        return vmb_get_field( $selector, $post_id );
-    }
-}
-
-if ( ! function_exists( 'update_field' ) ) {
-    function update_field( $selector, $value, $post_id = false ) {
-        if ( 'option' === $post_id || 'options' === $post_id ) {
-            if ( 'geolocation' === $selector && is_array( $value ) ) {
-                vmb_update_option_field( 'geolocation_latitude', isset( $value['latitude'] ) ? $value['latitude'] : '' );
-                vmb_update_option_field( 'geolocation_longitude', isset( $value['longitude'] ) ? $value['longitude'] : '' );
-                return true;
-            }
-
-            vmb_update_option_field( $selector, $value );
-            return true;
-        }
-
-        $post_id = $post_id ? absint( $post_id ) : get_the_ID();
-        if ( ! $post_id ) {
-            return false;
-        }
-
-        if ( 'coordinates' === $selector && is_array( $value ) ) {
-            update_post_meta( $post_id, 'coordinates_latitude', isset( $value['latitude'] ) ? $value['latitude'] : '' );
-            update_post_meta( $post_id, 'coordinates_longitude', isset( $value['longitude'] ) ? $value['longitude'] : '' );
-            return true;
-        }
-
-        update_post_meta( $post_id, $selector, $value );
-        return true;
-    }
 }

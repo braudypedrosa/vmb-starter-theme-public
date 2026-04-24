@@ -124,7 +124,7 @@ echo '<style>body:not(.elementor-editor-active) .countdown-timer { display: none
 }
 $dynamic_phone_numbers = vmb_get_field('dynamic_phone_numbers', 'option');
 if(!empty($dynamic_phone_numbers)) {
-// Get textarea from ACF options and convert to array
+// Convert the saved textarea list to an array for the frontend script.
 $phone_list_raw = $dynamic_phone_numbers;
 $phone_numbers = array_filter(array_map('trim', explode("\n", $phone_list_raw)));
 // Pass to JS

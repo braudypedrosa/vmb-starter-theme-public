@@ -12,32 +12,25 @@ function vmb_register_native_elementor_dynamic_tags( $dynamic_tags ) {
 
     if ( method_exists( $dynamic_tags, 'register_group' ) ) {
         $dynamic_tags->register_group(
-            'acf',
+            'vmb-fields',
             array(
-                'title' => esc_html__( 'ACF', 'vmb-starter-theme' ),
-            )
-        );
-
-        $dynamic_tags->register_group(
-            'jet-engine',
-            array(
-                'title' => esc_html__( 'JetEngine', 'vmb-starter-theme' ),
+                'title' => esc_html__( 'VMB Fields', 'vmb-starter-theme' ),
             )
         );
     }
 
-    if ( ! class_exists( 'VMB_Native_ACF_Text_Dynamic_Tag' ) ) {
-        class VMB_Native_ACF_Text_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
+    if ( ! class_exists( 'VMB_Native_Text_Field_Dynamic_Tag' ) ) {
+        class VMB_Native_Text_Field_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
             public function get_name() {
-                return 'acf-text';
+                return 'vmb-field-text';
             }
 
             public function get_title() {
-                return esc_html__( 'ACF Field', 'vmb-starter-theme' );
+                return esc_html__( 'VMB Field', 'vmb-starter-theme' );
             }
 
             public function get_group() {
-                return 'acf';
+                return 'vmb-fields';
             }
 
             public function get_categories() {
@@ -50,7 +43,7 @@ function vmb_register_native_elementor_dynamic_tags( $dynamic_tags ) {
                     return;
                 }
 
-                $value = vmb_get_elementor_acf_text_value( $key );
+                $value = vmb_get_elementor_text_value( $key );
                 if ( '' === $value || null === $value || false === $value ) {
                     return;
                 }
@@ -59,33 +52,23 @@ function vmb_register_native_elementor_dynamic_tags( $dynamic_tags ) {
             }
 
             protected function register_controls() {
-                if ( ! class_exists( '\Elementor\Controls_Manager' ) ) {
-                    return;
-                }
-
-                $this->add_control(
-                    'key',
-                    array(
-                        'label' => esc_html__( 'Key', 'vmb-starter-theme' ),
-                        'type'  => \Elementor\Controls_Manager::TEXT,
-                    )
-                );
+                vmb_register_elementor_key_control( $this );
             }
         }
     }
 
-    if ( class_exists( '\Elementor\Core\DynamicTags\Data_Tag' ) && ! class_exists( 'VMB_Native_ACF_URL_Dynamic_Tag' ) ) {
-        class VMB_Native_ACF_URL_Dynamic_Tag extends \Elementor\Core\DynamicTags\Data_Tag {
+    if ( class_exists( '\Elementor\Core\DynamicTags\Data_Tag' ) && ! class_exists( 'VMB_Native_URL_Field_Dynamic_Tag' ) ) {
+        class VMB_Native_URL_Field_Dynamic_Tag extends \Elementor\Core\DynamicTags\Data_Tag {
             public function get_name() {
-                return 'acf-url';
+                return 'vmb-field-url';
             }
 
             public function get_title() {
-                return esc_html__( 'ACF URL Field', 'vmb-starter-theme' );
+                return esc_html__( 'VMB URL Field', 'vmb-starter-theme' );
             }
 
             public function get_group() {
-                return 'acf';
+                return 'vmb-fields';
             }
 
             public function get_categories() {
@@ -97,24 +80,15 @@ function vmb_register_native_elementor_dynamic_tags( $dynamic_tags ) {
             }
 
             public function get_value( array $options = array() ) {
-                $key      = $this->get_settings( 'key' );
-                $fallback = $this->get_settings( 'fallback' );
-
-                return vmb_get_elementor_acf_url_value( $key, $fallback );
+                return vmb_get_elementor_url_value( $this->get_settings( 'key' ), $this->get_settings( 'fallback' ) );
             }
 
             protected function register_controls() {
+                vmb_register_elementor_key_control( $this );
+
                 if ( ! class_exists( '\Elementor\Controls_Manager' ) ) {
                     return;
                 }
-
-                $this->add_control(
-                    'key',
-                    array(
-                        'label' => esc_html__( 'Key', 'vmb-starter-theme' ),
-                        'type'  => \Elementor\Controls_Manager::TEXT,
-                    )
-                );
 
                 $this->add_control(
                     'fallback',
@@ -127,18 +101,18 @@ function vmb_register_native_elementor_dynamic_tags( $dynamic_tags ) {
         }
     }
 
-    if ( class_exists( '\Elementor\Core\DynamicTags\Data_Tag' ) && ! class_exists( 'VMB_Native_ACF_Image_Dynamic_Tag' ) ) {
-        class VMB_Native_ACF_Image_Dynamic_Tag extends \Elementor\Core\DynamicTags\Data_Tag {
+    if ( class_exists( '\Elementor\Core\DynamicTags\Data_Tag' ) && ! class_exists( 'VMB_Native_Image_Field_Dynamic_Tag' ) ) {
+        class VMB_Native_Image_Field_Dynamic_Tag extends \Elementor\Core\DynamicTags\Data_Tag {
             public function get_name() {
-                return 'acf-image';
+                return 'vmb-field-image';
             }
 
             public function get_title() {
-                return esc_html__( 'ACF Image Field', 'vmb-starter-theme' );
+                return esc_html__( 'VMB Image Field', 'vmb-starter-theme' );
             }
 
             public function get_group() {
-                return 'acf';
+                return 'vmb-fields';
             }
 
             public function get_categories() {
@@ -150,24 +124,15 @@ function vmb_register_native_elementor_dynamic_tags( $dynamic_tags ) {
             }
 
             public function get_value( array $options = array() ) {
-                $key      = $this->get_settings( 'key' );
-                $fallback = $this->get_settings( 'fallback' );
-
-                return vmb_get_elementor_acf_image_value( $key, $fallback );
+                return vmb_get_elementor_image_value( $this->get_settings( 'key' ), $this->get_settings( 'fallback' ) );
             }
 
             protected function register_controls() {
+                vmb_register_elementor_key_control( $this );
+
                 if ( ! class_exists( '\Elementor\Controls_Manager' ) ) {
                     return;
                 }
-
-                $this->add_control(
-                    'key',
-                    array(
-                        'label' => esc_html__( 'Key', 'vmb-starter-theme' ),
-                        'type'  => \Elementor\Controls_Manager::TEXT,
-                    )
-                );
 
                 $this->add_control(
                     'fallback',
@@ -180,18 +145,50 @@ function vmb_register_native_elementor_dynamic_tags( $dynamic_tags ) {
         }
     }
 
-    if ( ! class_exists( 'VMB_Native_Jet_Term_Field_Dynamic_Tag' ) ) {
-        class VMB_Native_Jet_Term_Field_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
+    if ( class_exists( '\Elementor\Core\DynamicTags\Data_Tag' ) && ! class_exists( 'VMB_Native_Gallery_Field_Dynamic_Tag' ) ) {
+        class VMB_Native_Gallery_Field_Dynamic_Tag extends \Elementor\Core\DynamicTags\Data_Tag {
             public function get_name() {
-                return 'jet-term-field';
+                return 'vmb-field-gallery';
             }
 
             public function get_title() {
-                return esc_html__( 'Term Field', 'vmb-starter-theme' );
+                return esc_html__( 'VMB Gallery Field', 'vmb-starter-theme' );
             }
 
             public function get_group() {
-                return 'jet-engine';
+                return 'vmb-fields';
+            }
+
+            public function get_categories() {
+                return array( 'gallery' );
+            }
+
+            public function get_panel_template_setting_key() {
+                return 'key';
+            }
+
+            public function get_value( array $options = array() ) {
+                return vmb_get_elementor_gallery_value( $this->get_settings( 'key' ) );
+            }
+
+            protected function register_controls() {
+                vmb_register_elementor_key_control( $this );
+            }
+        }
+    }
+
+    if ( ! class_exists( 'VMB_Native_Term_Field_Dynamic_Tag' ) ) {
+        class VMB_Native_Term_Field_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
+            public function get_name() {
+                return 'vmb-term-field';
+            }
+
+            public function get_title() {
+                return esc_html__( 'VMB Term Field', 'vmb-starter-theme' );
+            }
+
+            public function get_group() {
+                return 'vmb-fields';
             }
 
             public function get_categories() {
@@ -199,11 +196,13 @@ function vmb_register_native_elementor_dynamic_tags( $dynamic_tags ) {
             }
 
             public function render() {
-                $taxonomy   = $this->get_settings( 'taxonomy' );
-                $field      = $this->get_settings( 'term_field' );
-                $meta_field = $this->get_settings( 'meta_field' );
-
-                echo wp_kses_post( vmb_get_elementor_jet_term_field_value( $taxonomy, $field, $meta_field ) );
+                echo wp_kses_post(
+                    vmb_get_elementor_term_field_value(
+                        $this->get_settings( 'taxonomy' ),
+                        $this->get_settings( 'term_field' ),
+                        $this->get_settings( 'meta_field' )
+                    )
+                );
             }
 
             protected function register_controls() {
@@ -238,29 +237,50 @@ function vmb_register_native_elementor_dynamic_tags( $dynamic_tags ) {
         }
     }
 
-    $dynamic_tags->register( new VMB_Native_ACF_Text_Dynamic_Tag() );
-    if ( class_exists( 'VMB_Native_ACF_URL_Dynamic_Tag' ) ) {
-        $dynamic_tags->register( new VMB_Native_ACF_URL_Dynamic_Tag() );
+    $dynamic_tags->register( new VMB_Native_Text_Field_Dynamic_Tag() );
+
+    if ( class_exists( 'VMB_Native_URL_Field_Dynamic_Tag' ) ) {
+        $dynamic_tags->register( new VMB_Native_URL_Field_Dynamic_Tag() );
     }
-    if ( class_exists( 'VMB_Native_ACF_Image_Dynamic_Tag' ) ) {
-        $dynamic_tags->register( new VMB_Native_ACF_Image_Dynamic_Tag() );
+
+    if ( class_exists( 'VMB_Native_Image_Field_Dynamic_Tag' ) ) {
+        $dynamic_tags->register( new VMB_Native_Image_Field_Dynamic_Tag() );
     }
-    $dynamic_tags->register( new VMB_Native_Jet_Term_Field_Dynamic_Tag() );
+
+    if ( class_exists( 'VMB_Native_Gallery_Field_Dynamic_Tag' ) ) {
+        $dynamic_tags->register( new VMB_Native_Gallery_Field_Dynamic_Tag() );
+    }
+
+    $dynamic_tags->register( new VMB_Native_Term_Field_Dynamic_Tag() );
 }
 
-function vmb_get_elementor_acf_text_value( $key ) {
-    return vmb_normalize_elementor_acf_text_value( vmb_get_elementor_acf_field_value( $key ) );
+function vmb_register_elementor_key_control( $tag ) {
+    if ( ! class_exists( '\Elementor\Controls_Manager' ) ) {
+        return;
+    }
+
+    $tag->add_control(
+        'key',
+        array(
+            'label' => esc_html__( 'Key', 'vmb-starter-theme' ),
+            'type'  => \Elementor\Controls_Manager::TEXT,
+        )
+    );
 }
 
-function vmb_get_elementor_acf_url_value( $key, $fallback = '' ) {
-    $field = vmb_parse_elementor_acf_key( $key );
-    $value = vmb_get_elementor_acf_field_value( $key );
+function vmb_get_elementor_text_value( $key ) {
+    return vmb_normalize_elementor_text_value( vmb_get_elementor_field_value( $key ) );
+}
+
+function vmb_get_elementor_url_value( $key, $fallback = '' ) {
+    $field = vmb_parse_elementor_field_key( $key );
+    $value = vmb_get_elementor_field_value( $key );
 
     if ( is_array( $value ) && isset( $value['url'] ) ) {
         $value = $value['url'];
     }
 
-    $value = vmb_normalize_elementor_acf_text_value( $value );
+    $value = vmb_normalize_elementor_text_value( $value );
     if ( '' === $value && $fallback ) {
         $value = $fallback;
     }
@@ -287,19 +307,29 @@ function vmb_format_elementor_tel_url( $value ) {
     return $value ? 'tel:' . $value : '';
 }
 
-function vmb_get_elementor_acf_image_value( $key, $fallback = array() ) {
-    $value = vmb_get_elementor_acf_field_value( $key );
-    $image = vmb_normalize_elementor_acf_image_value( $value );
+function vmb_get_elementor_image_value( $key, $fallback = array() ) {
+    $value = vmb_get_elementor_field_value( $key );
+    $image = vmb_normalize_elementor_image_value( $value );
 
     if ( empty( $image['url'] ) && is_array( $fallback ) ) {
-        $image = vmb_normalize_elementor_acf_image_value( $fallback );
+        $image = vmb_normalize_elementor_image_value( $fallback );
     }
 
     return $image;
 }
 
-function vmb_get_elementor_acf_field_value( $key ) {
-    $field = vmb_parse_elementor_acf_key( $key );
+function vmb_get_elementor_gallery_value( $key ) {
+    $value = vmb_get_elementor_field_value( $key );
+
+    if ( function_exists( 'vmb_format_gallery_value' ) ) {
+        return vmb_format_gallery_value( $value );
+    }
+
+    return is_array( $value ) ? $value : array();
+}
+
+function vmb_get_elementor_field_value( $key ) {
+    $field = vmb_parse_elementor_field_key( $key );
 
     if ( 'option' === $field['scope'] ) {
         return vmb_get_field( $field['field'], 'option' );
@@ -328,7 +358,7 @@ function vmb_get_elementor_acf_field_value( $key ) {
     return vmb_get_field( $field['field'], 'option' );
 }
 
-function vmb_parse_elementor_acf_key( $key ) {
+function vmb_parse_elementor_field_key( $key ) {
     $key = (string) $key;
 
     if ( 0 === strpos( $key, 'options:' ) ) {
@@ -349,7 +379,7 @@ function vmb_parse_elementor_acf_key( $key ) {
     );
 }
 
-function vmb_normalize_elementor_acf_text_value( $value ) {
+function vmb_normalize_elementor_text_value( $value ) {
     if ( is_array( $value ) ) {
         if ( isset( $value['address'] ) ) {
             return $value['address'];
@@ -361,7 +391,7 @@ function vmb_normalize_elementor_acf_text_value( $value ) {
     return is_scalar( $value ) ? (string) $value : '';
 }
 
-function vmb_normalize_elementor_acf_image_value( $value ) {
+function vmb_normalize_elementor_image_value( $value ) {
     $image = array(
         'id'  => null,
         'url' => '',
@@ -390,7 +420,7 @@ function vmb_normalize_elementor_acf_image_value( $value ) {
     return $image;
 }
 
-function vmb_get_elementor_jet_term_field_value( $taxonomy, $field, $meta_field = '' ) {
+function vmb_get_elementor_term_field_value( $taxonomy, $field, $meta_field = '' ) {
     $term = vmb_get_elementor_current_term( $taxonomy );
 
     if ( ! $term && get_the_ID() && $taxonomy ) {

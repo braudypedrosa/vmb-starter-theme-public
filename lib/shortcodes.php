@@ -2,7 +2,7 @@
 
 // add_shortcode( 'booking_engine', 'booking_engine_func' );
 add_shortcode( 'vmb_gallery', 'vmb_gallery_func' );
-add_shortcode( 'vmb_acf_gallery', 'vmb_acf_gallery_func' );
+add_shortcode( 'vmb_field_gallery', 'vmb_field_gallery_func' );
 add_shortcode( 'vmb_rooms', 'vmb_rooms_func' );
 add_shortcode( 'vmb_room_category', 'vmb_room_category_func' );
 add_shortcode( 'vmb_room_amenities', 'vmb_room_amenities_func' );
@@ -123,12 +123,12 @@ function vmb_gallery_func($atts) {
  * @param array $atts Shortcode attributes.
  * @return string HTML content for the gallery.
  */
-function vmb_acf_gallery_func($atts) {
+function vmb_field_gallery_func($atts) {
 
     $atts = shortcode_atts(array(
         'post_id' => null,
         'gallery_key' => 'gallery',
-    ), $atts, 'vmb_gallery');
+    ), $atts, 'vmb_field_gallery');
 
     // Get the post ID from the current post in the loop
     // If we're in a loop, $post will be available
@@ -709,7 +709,7 @@ function vmb_guest_calendar_func($atts) {
 
     // If no unit_id is provided in the shortcode, check if we're on a room post type
     if (empty($unit_id) && isset($post_id) && get_post_type($post_id) === 'vmb_room') {
-        // Get the unit_id from ACF field for room post type
+        // Get the room setting when no unit_id is provided in the shortcode.
         $unit_id = vmb_get_field('unit_id', $post_id);
         
         if (empty($unit_id)) {
