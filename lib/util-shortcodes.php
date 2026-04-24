@@ -4,6 +4,7 @@ add_shortcode('year', 'year_func');
 add_shortcode('vmb_socials', 'vmb_socials_func');
 add_shortcode('vmb_display_phone_number', 'vmb_display_phone_number_func');
 add_shortcode('vmb_display_email', 'vmb_display_email_func');
+add_shortcode('vmb_display_address', 'vmb_display_address_func');
 
 // See More
 function see_more_func($atts) {
@@ -64,6 +65,25 @@ function vmb_display_email_func($atts) {
 		return '<a href="mailto:'.$email.'" class="vmb-email '.$atts['class'].'">'.$email.'</a>';
 	} else {
 		return 'Email option not found';
+	}
+}
+
+function vmb_display_address_func($atts) {
+	$atts = shortcode_atts(
+		array(
+			'class' => '',
+			'option' => 'address',
+		),
+		$atts,
+		'vmb_display_address'
+	);
+
+	$address = vmb_get_field($atts['option'], 'option');
+
+	if($address) {
+		return '<span class="vmb-address '.$atts['class'].'">'.wp_kses_post($address).'</span>';
+	} else {
+		return 'Address option not found';
 	}
 }
 
