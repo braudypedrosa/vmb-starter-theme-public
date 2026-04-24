@@ -5,6 +5,9 @@ exit; // Exit if accessed directly.
 // Required files
 require_once get_stylesheet_directory() . '/inc/theme-updater.php';
 require_once get_stylesheet_directory() . '/inc/plugins.php';
+require get_stylesheet_directory() . '/lib/native-fields.php';
+require get_stylesheet_directory() . '/lib/native-content.php';
+require get_stylesheet_directory() . '/lib/native-admin.php';
 require get_stylesheet_directory() . '/lib/helper.php';
 require get_stylesheet_directory() . '/lib/util-shortcodes.php';
 require get_stylesheet_directory() . '/lib/shortcodes.php';
@@ -87,7 +90,7 @@ add_action( 'wp_enqueue_scripts', 'vmb_enqueue_general', 20 );
 // }
 add_action('wp_footer', function() {
 global $post;
-if (is_singular('vmb_room') && get_field('custom_external_url', $post->ID)) {
+if (is_singular('vmb_room') && vmb_get_field('custom_external_url', $post->ID)) {
 echo '<script>jQuery("body").addClass("external-room");</script>';
 }
 });
@@ -97,28 +100,28 @@ echo '<style>
 </style>';
 });
 add_action('wp_head', function () {
-$show_banner = get_field('show_announcement_banner', 'option');
+$show_banner = vmb_get_field('show_announcement_banner', 'option');
 if (!$show_banner) {
 echo '<style>
 .vmb-announcement-banner { display: none!important; }
 </style>';
 }
 $current_post_id = get_the_ID();
-$show_booking_widget = get_field('show_booking_widget', $current_post_id);
+$show_booking_widget = vmb_get_field('show_booking_widget', $current_post_id);
 if (!$show_booking_widget) {
 echo '<style>
 .booking-engine-form { display: none!important; }
 </style>';
 }
-$show_availability_calendar = get_field('show_availability_calendar', $current_post_id);
+$show_availability_calendar = vmb_get_field('show_availability_calendar', $current_post_id);
 if (!$show_availability_calendar) {
 echo '<style>.availability-calendar { display: none!important; } </style>';
 }
-$show_countdown_timer = get_field('show_countdown_timer', $current_post_id);
+$show_countdown_timer = vmb_get_field('show_countdown_timer', $current_post_id);
 if(!$show_countdown_timer) {
 echo '<style>body:not(.elementor-editor-active) .countdown-timer { display: none!important; } </style>';
 }
-$dynamic_phone_numbers = get_field('dynamic_phone_numbers', 'option');
+$dynamic_phone_numbers = vmb_get_field('dynamic_phone_numbers', 'option');
 if(!empty($dynamic_phone_numbers)) {
 // Get textarea from ACF options and convert to array
 $phone_list_raw = $dynamic_phone_numbers;

@@ -39,7 +39,7 @@ function vmb_display_phone_number_func($atts) {
 		'vmb_display_phone_number'
 	);
 
-	$phone_number = get_field($atts['option'], 'option');
+	$phone_number = vmb_get_field($atts['option'], 'option');
 
 	if($phone_number) {
 		return '<a href="tel:'.$phone_number.'" class="dynamic-phone-number vmb-phone-number '.$atts['class'].'">'.$phone_number.'</a>';
@@ -58,7 +58,7 @@ function vmb_display_email_func($atts) {
 		'vmb_display_email'
 	);
 
-	$email = get_field($atts['option'], 'option');
+	$email = vmb_get_field($atts['option'], 'option');
 
 	if($email) {
 		return '<a href="mailto:'.$email.'" class="vmb-email '.$atts['class'].'">'.$email.'</a>';
@@ -77,7 +77,7 @@ function vmb_socials_func($atts) {
 		'vmb_socials'
 	);
 	
-	$socials = get_field('social_media', 'option');
+	$socials = vmb_get_field('social_media', 'option');
 	$output = '';
 
 	if(!empty($socials)) {

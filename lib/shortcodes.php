@@ -27,7 +27,7 @@ add_shortcode( 'vmb_guestdesk_calendar', 'vmb_guest_calendar_func' );
  */
 function booking_engine_func() {
 
-	$sitename = get_field('site_name', 'option') ? get_field('site_name', 'option') : '';
+	$sitename = vmb_get_field('site_name', 'option') ? vmb_get_field('site_name', 'option') : '';
 
     if (empty($sitename)) {
         return 'Site Name is required to display the booking engine. Please add a "Site Name" in the Site Settings.';
@@ -66,7 +66,7 @@ function vmb_gallery_func($atts) {
         $post_id = $atts['id'];
     }
 
-    $gallery = get_field($gallery_key, $post_id);
+    $gallery = vmb_get_field($gallery_key, $post_id);
     $name = get_the_title($post_id);
     $output = '';
 
@@ -147,7 +147,7 @@ function vmb_acf_gallery_func($atts) {
         return 'Post ID is required to display the gallery.';
     }
 
-    $gallery = get_field($gallery_key, $post_id);
+    $gallery = vmb_get_field($gallery_key, $post_id);
     $name = get_the_title($post_id);
     $output = '';
 
@@ -310,7 +310,7 @@ function display_category_func($atts) {
 
         foreach($specials as $special) {
             
-            $image = get_field('preview_image', 'option');
+            $image = vmb_get_field('preview_image', 'option');
 
             $output .= '<div class="specialcode-item" id="special-'.$special['id'].'">
                 <img src="'. (($image) ? $image['url'] : 'https://via.placeholder.com/600x400') .'" alt="'.$special['site_name'].'">
@@ -364,7 +364,7 @@ function vmb_reviews_func($atts) {
     
     foreach($reviews as $review) {
         $id = $review->ID;
-        $hide = get_field('hide_from_query', $id);
+        $hide = vmb_get_field('hide_from_query', $id);
 
         if(!$hide) {
             $firstname = get_post_meta($id, 'vmb_review_firstname', true);
@@ -393,8 +393,8 @@ function vmb_reviews_func($atts) {
 
 function vmb_mapbox_map_func() {
     
-    $coordinates = get_field('geolocation', 'option') ? get_field('geolocation', 'option') : '';
-    $address = get_field('address', 'option') ? get_field('address', 'option') : '';
+    $coordinates = vmb_get_field('geolocation', 'option') ? vmb_get_field('geolocation', 'option') : '';
+    $address = vmb_get_field('address', 'option') ? vmb_get_field('address', 'option') : '';
     
     // Check if lat and lng post meta exist
 	$lat = $coordinates['latitude'];
@@ -428,7 +428,7 @@ function vmb_amenities_func() {
         while($query->have_posts()) {
             $query->the_post();
 
-            $image = get_field('gallery', get_the_ID());
+            $image = vmb_get_field('gallery', get_the_ID());
 
             // Get the first amenity category's parent name (if it has one)
             $amenity_terms = get_the_terms(get_the_ID(), 'amenity-category');
@@ -536,7 +536,7 @@ function vmb_amenities_category_func($atts) {
         while($query->have_posts()) {
             $query->the_post();
 
-            $image = get_field('gallery', get_the_ID());
+            $image = vmb_get_field('gallery', get_the_ID());
 
             // Get the first amenity category's parent name (if it has one)
             $amenity_terms = get_the_terms(get_the_ID(), 'amenity-category');
@@ -710,7 +710,7 @@ function vmb_guest_calendar_func($atts) {
     // If no unit_id is provided in the shortcode, check if we're on a room post type
     if (empty($unit_id) && isset($post_id) && get_post_type($post_id) === 'vmb_room') {
         // Get the unit_id from ACF field for room post type
-        $unit_id = get_field('unit_id', $post_id);
+        $unit_id = vmb_get_field('unit_id', $post_id);
         
         if (empty($unit_id)) {
             return 'Unit ID is required to display the guest calendar. Please add a "unit_id" in the shortcode or set it in the room settings.';
@@ -720,7 +720,7 @@ function vmb_guest_calendar_func($atts) {
     }
 
 
-    $site_name = get_field('site_name', 'option') ? get_field('site_name', 'option') : '';
+    $site_name = vmb_get_field('site_name', 'option') ? vmb_get_field('site_name', 'option') : '';
     
 
     echo '<script type="text/javascript" src="https://widgets.guestdesk.com/sites/guestdesk/widgets/bundle.en.js"></script>
@@ -754,7 +754,7 @@ function vmb_room_amenities_func($atts) {
 
     if (empty($room_id) && isset($post_id) && get_post_type($post_id) === 'vmb_room') {
         $room_id = $post_id;
-        $amenities = get_field('amenities', $room_id);
+        $amenities = vmb_get_field('amenities', $room_id);
     } elseif (empty($room_id)) {
         return 'Room ID is required to display the room amenities. Please add a "room_id" in the shortcode.';
     }

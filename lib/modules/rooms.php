@@ -106,20 +106,20 @@ function get_rooms($atts) {
             $demo_image      = 'https://via.placeholder.com/600';
 
             $title           = $room->post_title;
-            $unit_id         = get_field('unit_id', $room->ID);
+            $unit_id         = vmb_get_field('unit_id', $room->ID);
             $content         = $room->post_content;
-            $custom_link     = get_field('custom_external_url', $room->ID);
+            $custom_link     = vmb_get_field('custom_external_url', $room->ID);
 
             $featured_image  = has_post_thumbnail($room->ID)
                 ? get_the_post_thumbnail_url($room->ID, 'full')
                 : ($atts['demo'] ? $demo_image : '');
 
-            $amenities = get_field('amenities', $room->ID);
+            $amenities = vmb_get_field('amenities', $room->ID);
             if ($atts['demo'] && empty($amenities)) {
                 $amenities = $demo_amenities;
             }
 
-            $short_description = get_field('short_description', $room->ID);
+            $short_description = vmb_get_field('short_description', $room->ID);
             if (empty($short_description)) {
                 $short_description = !empty($content) ? substr($content, 0, 200) . ' ...' : '';
             }

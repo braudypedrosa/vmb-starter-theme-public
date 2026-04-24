@@ -74,13 +74,6 @@ function vmb_sites_register_required_plugins() {
 			'version' => '3.1.3',
 		),
         array(
-			'name'    => 'Advanced Custom Fields Pro',
-			'slug'    => 'advanced-custom-fields-pro',
-			'source'  => get_stylesheet_directory() . '/lib/plugins/advanced-custom-fields-pro.zip',
-			'required'=> true,
-			'version' => '6.3.6',
-		),
-        array(
 			'name'    => 'Discount Cards Receiver',
 			'slug'    => 'discount-cards-receiver',
 			'source'  => get_stylesheet_directory() . '/lib/plugins/discount-cards-receiver.zip',
