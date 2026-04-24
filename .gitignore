@@ -1,0 +1,4 @@
+node_modules
+bundled
+.release-build
+.DS_Store

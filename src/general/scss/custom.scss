@@ -1,0 +1,115 @@
+// See More Button
+a.see-more-btn {
+    color: white !important;
+    background: #0B4891;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 30px;
+    font-family: 'Poppins';
+    gap: 10px;
+    display: inline-flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 400;
+    cursor: pointer;
+}
+ 
+a.theme-button {
+    background-color: var(--e-global-color-accent);
+    border-color: var(--e-global-color-accent);
+    font-family: var(--e-global-typography-accent-font-family), Sans-serif;
+    font-weight: normal!important;
+    color: var(--e-global-color-primary);
+    font-size: 16px;
+    line-height: 1em;
+    border-style: none;
+    border-radius: 8px;
+    display: inline-block;
+    padding: 12px 20px;
+    font-weight: bold;
+    margin-top: 30px;
+    transition: all ease 0.5s;
+
+    &:hover {
+        background-color: var(--e-global-color-a82254a);
+        color: var(--e-global-color-9d4dd44);
+        transition: all ease 0.5s;
+    }
+}
+
+.hidden_content {
+    display: none;
+}
+// End of See More Button
+
+
+.star-rating {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 2px;
+
+    i {
+        color: #FFD600;
+    }
+
+    .empty {
+        color: #ccc;
+    }
+    
+}
+
+
+.mapbox-solo {
+    .mapboxgl-ctrl-group {
+        button {
+            border-radius: 0!important;
+        }
+    }
+
+    .mapboxgl-ctrl-bottom-right {
+        display: none!important;
+    }
+}
+
+.vmb-socials {
+    display: flex;
+    gap: 10px;
+
+    a {
+        background-color: white;
+        width: 25px;
+        height: 25px;
+        border-radius: 100%;
+        color: var(--e-global-color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        transition: all ease 0.5s;
+
+        &:hover {
+            background-color: var(--e-global-color-secondary);
+            color: var(--e-global-color-primary);
+            transition: all ease 0.5s;
+        }
+    }
+
+    &.dark {
+        a {
+            background-color: var(--e-global-color-primary);
+            color: white;
+
+            &:hover {
+                background-color: var(--e-global-color-secondary);
+                color: var(--e-global-color-primary);
+            }
+        }
+    }
+}
+
+.vmb-phone-number, .vmb-email {
+    color: inherit;
+    font-family: inherit;
+}
+

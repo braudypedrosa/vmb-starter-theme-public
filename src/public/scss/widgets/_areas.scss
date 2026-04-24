@@ -1,0 +1,52 @@
+@use "../helpers" as *;
+ 
+
+.vmb-area-information-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 40px 20px;
+    max-width: 1080px;
+    margin: 0 auto;
+
+    @include maxBreakpoint('sm') {
+        grid-template-columns: 1fr; 
+        gap: 40px;
+    }
+    
+    .vmb-area-information {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        .area-information-image {
+            width: 35%;
+        }
+
+        .area-information-details {
+            width: 65%;
+        }
+
+        @include maxBreakpoint('sm') {
+            flex-direction: column;
+        }
+
+        img {
+            height: 300px;
+            border-radius: 4px;
+            object-fit: cover;
+
+            @include maxBreakpoint('sm') {
+                width: 100%;
+            }
+        }
+
+        h3 {
+            color: var( --e-global-color-primary );
+        }
+
+        p {
+            color: var( --e-global-color-text );
+        }
+    }
+    
+}
