@@ -15,6 +15,7 @@ function vmb_register_native_content_types() {
         'faq'              => array( 'FAQs', 'FAQ', 'dashicons-editor-help', array( 'title', 'editor', 'page-attributes' ) ),
         'golf-course'      => array( 'Golf Courses', 'Golf Course', 'dashicons-flag', array( 'title', 'editor', 'thumbnail', 'excerpt', 'page-attributes' ) ),
         'group'            => array( 'Groups', 'Group', 'dashicons-groups', array( 'title', 'editor', 'thumbnail', 'excerpt', 'page-attributes' ) ),
+        'vmb_reviews'      => array( 'Reviews', 'Review', 'dashicons-star-filled', array( 'title', 'editor', 'thumbnail', 'excerpt', 'page-attributes' ) ),
     );
 
     foreach ( $post_types as $post_type => $config ) {

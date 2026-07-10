@@ -23,6 +23,7 @@ rsync -a \
   --exclude 'bundled' \
   --exclude '.release-build' \
   --exclude 'scripts' \
+  --exclude 'tests' \
   --exclude 'src' \
   --exclude 'gulpfile.js' \
   --exclude 'package.json' \

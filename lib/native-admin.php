@@ -240,6 +240,20 @@ function vmb_native_render_post_icon_meta_box( $post ) {
 function vmb_native_render_review_meta_box( $post ) {
     wp_nonce_field( 'vmb_native_save_post_meta', 'vmb_native_fields_nonce' );
     vmb_native_checkbox_field( 'vmb_hide_from_query', 'Hide from Query', vmb_get_field( 'hide_from_query', $post->ID ) );
+    echo '<p>';
+    vmb_native_checkbox_field( 'vmb_include_in_sync', 'Include in sync overwrite', vmb_get_field( 'include_in_sync', $post->ID ) );
+    echo '</p>';
+
+    $sync_status = get_post_meta( $post->ID, '_vmb_review_sync_status', true );
+    $unique_id   = get_post_meta( $post->ID, 'vmb_review_id', true );
+
+    if ( $sync_status ) {
+        printf( '<p><strong>Sync Status:</strong><br>%s</p>', esc_html( ucwords( str_replace( '_', ' ', $sync_status ) ) ) );
+    }
+
+    if ( $unique_id ) {
+        printf( '<p><strong>Unique ID:</strong><br><code>%s</code></p>', esc_html( $unique_id ) );
+    }
 }
 
 function vmb_native_save_post_meta( $post_id ) {
@@ -301,6 +315,12 @@ function vmb_native_save_post_meta( $post_id ) {
         vmb_update_post_field( $post_id, 'hide_from_query', '1' );
     } elseif ( 'vmb_reviews' === $post_type ) {
         vmb_update_post_field( $post_id, 'hide_from_query', '0' );
+    }
+
+    if ( 'vmb_reviews' === $post_type && isset( $_POST['vmb_include_in_sync'] ) ) {
+        vmb_update_post_field( $post_id, 'include_in_sync', '1' );
+    } elseif ( 'vmb_reviews' === $post_type ) {
+        vmb_update_post_field( $post_id, 'include_in_sync', '0' );
     }
 }
 
@@ -401,6 +421,8 @@ function vmb_native_render_site_settings_integrations() {
     vmb_native_settings_text_row( 'vmb_alchemer_minimum_rating', 'Minimum Rating', $alchemer['sync_preference']['minimum_rating'], 'number' );
     vmb_native_settings_text_row( 'vmb_alchemer_reviews_to_pull', 'Reviews to Pull', $alchemer['sync_preference']['reviews_to_pull'], 'number' );
     echo '</tbody></table>';
+
+    do_action( 'vmb_native_after_integrations_settings', $alchemer );
 }
 
 function vmb_native_render_site_settings_advanced() {

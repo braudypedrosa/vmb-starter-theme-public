@@ -8,6 +8,7 @@ require_once get_stylesheet_directory() . '/inc/plugins.php';
 require get_stylesheet_directory() . '/lib/native-fields.php';
 require get_stylesheet_directory() . '/lib/native-content.php';
 require get_stylesheet_directory() . '/lib/native-admin.php';
+require get_stylesheet_directory() . '/lib/reviews-sync.php';
 require get_stylesheet_directory() . '/lib/native-elementor.php';
 require get_stylesheet_directory() . '/lib/helper.php';
 require get_stylesheet_directory() . '/lib/util-shortcodes.php';
